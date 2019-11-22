@@ -1,0 +1,72 @@
+/*Alex Bowman
+ * csc111
+ * Professor Silvestri
+ * 11/22/19
+ * HW9 Bean Machine
+ */
+package beanMachine;
+
+import java.util.Scanner;
+
+public class BEAN {
+
+	private final static String TITLE = "Bean Machine";
+	private final static String CONTINUE_PROMPT = "Do this again? [y/N] ";
+
+	private static void process(Scanner sc, String args[]) {
+		Scanner input = new Scanner(System.in);
+		System.out.print("Please enter number of balls: ");
+		int Balls = input.nextInt();
+
+		System.out.print("Please enter the number of slots: ");
+		int Slots = input.nextInt();
+		int[] slts = new int[Slots + 1];
+		String direction;
+		for (int i = 0; i < Balls; i++) {
+			int sum = 0;
+			for (int j = 0; j < Slots; j++) {
+				int rand = (int) (Math.random() * 2);
+				sum += rand;
+				if (rand == 0)
+					direction = "L";
+				else
+					direction = "R";
+				System.out.print(direction);
+			}
+			slts[sum]++;
+			System.out.println();
+
+		}
+		String[] ball = new String[Slots + 1];
+		for (int i = Balls; i > 0; i--) {
+			for (int k = 0; k <= Slots; k++) {
+				if (i == slts[k]) {
+					ball[k] = "O";
+							
+					slts[k]--;
+				} else
+					ball[k] = " ";
+				System.out.print(ball[k]);
+
+			}
+			System.out.println();
+		}
+	}
+
+	private static boolean doThisAgain(Scanner sc, String prompt) {
+		System.out.print(prompt);
+		String doOver = sc.nextLine();
+		return doOver.trim().equalsIgnoreCase("Y");
+	}
+
+	public static void main(String args[]) {
+		System.out.println("Welcome to " + TITLE);
+		Scanner sc = new Scanner(System.in);
+		do {
+			process(sc, args);
+		} while (doThisAgain(sc, CONTINUE_PROMPT));
+		sc.close();
+		System.out.println("Thank you for using " + TITLE);
+	}
+
+}
